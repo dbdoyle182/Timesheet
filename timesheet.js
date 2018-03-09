@@ -23,17 +23,17 @@
 
     name = $("#name-input").val().trim();
     role = $("#role-input").val().trim();
-    start = $("#start-input").val().trim();
+    start = moment($("#start-input").val().trim(), "DD/MM/YY").format("X");
     monthsWorked = ""
     monthRate = $("#rate-input").val().trim();
     totalBilled = ""
 
-  
+    
   
     database.ref().push({
         name: name,
         role: role,
-        start: start,
+        start: moment(start, "MM/DD/YY").format("X"),
         rate: monthRate
     });
 
@@ -42,7 +42,8 @@
 
   database.ref().on("child_added", function (childSnapshot) {
       //  monthsWorked = exFunction(a, b)
-    $("#table-body").append("<tr>" + "<td>" + childSnapshot.val().name + "</td><td>" + childSnapshot.val().role + "</td><td>" + childSnapshot.val().start +
+    var newStart = moment(start).format("MMMM Do YYYY")
+    $("#table-body").append("<tr>" + "<td>" + childSnapshot.val().name + "</td><td>" + childSnapshot.val().role + "</td><td>" + childSnapshot.val().newStart +
     "</td><td>" + childSnapshot.val().monthsWorked + "</td><td>" + childSnapshot.val().rate + "</td><td>" + childSnapshot.val().totalBilled + "</td><?tr>");
   }, function (errorObject) {
     console.log("Errors handled: " +errorObject.code);
