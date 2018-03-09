@@ -36,8 +36,18 @@
     var nameTd = $("<td>").text(name);
     var roleTd = $("<td>").text(role);
     var startTd = $("<td>").text(start);
+    var monthsWorked = $("<td>").text("Test");
     var rateTd = $("<td>").text(monthRate);
+    var totalBilled = $("<td>").text("Test")
     newRow.append(nameTd, roleTd, startTd, rateTd);
     $("#table-body").append(newRow);
 
+  });
+
+  database.ref().on("child_added", function (childSnapshot) {
+
+    $("#table-body").append("<tr>" + "<td>" + childSnapshot.val().name + "</td><td>" + childSnapshot.val().role + "</td><td>" + childSnapshot.val().start +
+    "</td><td>" + childSnapshot.val().monthsWorked + "</td><td>" + childSnapshot.val().rate + "</td><td>" + childSnapshot.val().totalBilled + "</td><?tr>");
+  }, function (errorObject) {
+    console.log("Errors handled: " +errorObject.code);
   });
