@@ -14,6 +14,8 @@
   var role = "";
   var start = "";
   var monthRate = "";
+  var monthsWorked = "";
+  var totalBilled = "";
 
   $("#submit-button").on("click", function(event){
     event.preventDefault();
@@ -22,7 +24,10 @@
     name = $("#name-input").val().trim();
     role = $("#role-input").val().trim();
     start = $("#start-input").val().trim();
+    monthsWorked = ""
     monthRate = $("#rate-input").val().trim();
+    totalBilled = ""
+
   
   
     database.ref().push({
@@ -32,20 +37,11 @@
         rate: monthRate
     });
 
-    var newRow = $("<tr>");
-    var nameTd = $("<td>").text(name);
-    var roleTd = $("<td>").text(role);
-    var startTd = $("<td>").text(start);
-    var monthsWorked = $("<td>").text("Test");
-    var rateTd = $("<td>").text(monthRate);
-    var totalBilled = $("<td>").text("Test")
-    newRow.append(nameTd, roleTd, startTd, rateTd);
-    $("#table-body").append(newRow);
 
   });
 
   database.ref().on("child_added", function (childSnapshot) {
-
+      //  monthsWorked = exFunction(a, b)
     $("#table-body").append("<tr>" + "<td>" + childSnapshot.val().name + "</td><td>" + childSnapshot.val().role + "</td><td>" + childSnapshot.val().start +
     "</td><td>" + childSnapshot.val().monthsWorked + "</td><td>" + childSnapshot.val().rate + "</td><td>" + childSnapshot.val().totalBilled + "</td><?tr>");
   }, function (errorObject) {
